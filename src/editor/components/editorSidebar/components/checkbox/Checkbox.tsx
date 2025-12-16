@@ -1,6 +1,6 @@
 import type { ChangeEventHandler, FC } from 'react';
-import useEditorContext from '../../../../context/hooks/useEditorContext';
-import { formatAsDateTime } from '../../../../utilities/dateTimeUtilities';
+import useEditorContext from '../../../../../context/hooks/useEditorContext';
+import { formatAsDateTime } from '../../../../../utilities/dateTimeUtilities';
 
 type Props = {
     checked: boolean;
@@ -30,7 +30,7 @@ const Checkbox: FC<Props> = ({ checked, index }) => {
     };
 
     return (
-        <label>
+        <label className="text-right -mt-0.5">
             <input type="checkbox" checked={checked} onChange={onChange} />
         </label>
     );

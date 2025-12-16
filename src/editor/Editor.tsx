@@ -13,7 +13,7 @@ const Editor: FC = () => {
     return (
         <div className="flex gap-4 flex-row max-w-4xl margin-x-auto">
             <EditorSidebar
-                className="bg-amber-400 p-5 w-1/4 text-right"
+                className="bg-amber-400 p-5 w-1/4"
                 style={sharedStyle}
             />
             <EditorTextarea sharedStyle={sharedStyle} />

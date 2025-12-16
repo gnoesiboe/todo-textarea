@@ -25,6 +25,7 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
                     sharedClassNames,
                     'text-transparent caret-black focus:outline-none focus:ring-0 resize-none',
                 )}
+                spellCheck={false}
                 style={sharedStyle}
                 value={text}
                 onChange={(e) => setText(e.target.value)}

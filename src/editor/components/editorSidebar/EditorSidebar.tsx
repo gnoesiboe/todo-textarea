@@ -8,8 +8,9 @@ import {
 import { useWindowSize } from '@uidotdev/usehooks';
 import { useTextWidth } from '@tag0/use-text-width';
 import { Sentence } from '../../model/Sentence';
-import Checkbox from './components/Checkbox';
+import Checkbox from './components/checkbox/Checkbox';
 import useEditorContext from '../../../context/hooks/useEditorContext';
+import Timer from './components/Timer/Timer';
 
 type Props = Pick<HTMLAttributes<HTMLDivElement>, 'className' | 'style'>;
 
@@ -58,11 +59,13 @@ const EditorSidebar: FC<Props> = (divProps) => {
                     const checked = /@done/.test(line);
 
                     accumulator.push(
-                        <Checkbox
+                        <div
+                            className="flex gap-3 items-center justify-end"
                             key={`${sentenceIndex}-${lineIndex}`}
-                            checked={checked}
-                            index={sentenceIndex}
-                        />,
+                        >
+                            <Timer index={sentenceIndex} />
+                            <Checkbox checked={checked} index={sentenceIndex} />
+                        </div>,
                     );
                 } else {
                     accumulator.push(
