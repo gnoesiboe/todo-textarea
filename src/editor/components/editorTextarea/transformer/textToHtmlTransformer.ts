@@ -39,7 +39,7 @@ const urlDriver: TransformerDriver = (text) => {
 
 const openTodoDriver: TransformerDriver = (text) => {
     if (text.startsWith('- [ ] ')) {
-        const content = text.slice(6).trim();
+        const content = text.slice(6);
 
         return `<div><span class="text-slate-300">- [ ]</span> <span class="text-slate-700">${content}</span></div>`;
     }
@@ -49,7 +49,7 @@ const openTodoDriver: TransformerDriver = (text) => {
 
 const doneTodoDriver: TransformerDriver = (text) => {
     if (text.startsWith('- [x] ')) {
-        const content = text.slice(6).trim();
+        const content = text.slice(6);
 
         return `<div><span class="text-slate-300">- [x]</span> <span class="italic line-through decoration-1">${content}</span></div>`;
     }
@@ -74,17 +74,6 @@ const listItemDriver: TransformerDriver = (text) => {
     return text;
 };
 
-const strongDriver: TransformerDriver = (text) => {
-    if (/\*\*[^*]+\*\*/.test(text)) {
-        return text.replaceAll(
-            /\*\*([^*]+)\*\*/g,
-            '<strong class="font-bold">**$1**</strong>',
-        );
-    }
-
-    return text;
-};
-
 const horizontalRuleDriver: TransformerDriver = (text) => {
     if (/^---+$/.test(text.trim())) {
         return `<div class="border-b-1 border-slate-300">${'&nbsp;'.repeat(
@@ -96,7 +85,7 @@ const horizontalRuleDriver: TransformerDriver = (text) => {
 };
 
 const fallbackDriver: TransformerDriver = (text) => {
-    return `<p class="text-slate-600">${text}</p>`;
+    return `<div class="text-slate-600">${text}</div>`;
 };
 
 const flagDriver: TransformerDriver = (text) => {
@@ -116,7 +105,6 @@ const drivers: ReadonlyArray<TransformerDriver> = [
     doneTodoDriver,
     openTodoDriver,
     listItemDriver, // Keep behind todo drivers
-    strongDriver,
     flagDriver,
     urlDriver,
     horizontalRuleDriver,
@@ -129,10 +117,11 @@ export function transformToHtml(text: string): string {
 
     return lines
         .map((line) => {
-            return drivers.reduce(
-                (currentLine, driver) => driver(currentLine),
-                line,
-            );
+            return drivers.reduce((currentLine, driver) => {
+                const transformedLine = driver(currentLine);
+
+                return transformedLine;
+            }, line);
         })
         .join('');
 }

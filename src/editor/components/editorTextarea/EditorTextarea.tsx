@@ -1,14 +1,15 @@
 import type { CSSProperties, FC } from 'react';
 import { transformToHtml } from './transformer/textToHtmlTransformer';
 import { twMerge } from 'tailwind-merge';
+import useEditorContext from '../../../context/hooks/useEditorContext';
 
 type Props = {
-    text: string;
-    onChange: (value: string) => void;
     sharedStyle: CSSProperties;
 };
 
-const EditorTextarea: FC<Props> = ({ text, onChange, sharedStyle }) => {
+const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
+    const { text, setText } = useEditorContext();
+
     const sharedClassNames =
         'w-full h-full border-0 p-0 bg-transparent mt-5 font-mono absolute top-0 left-0 text-sm line leading-6';
 
@@ -26,7 +27,7 @@ const EditorTextarea: FC<Props> = ({ text, onChange, sharedStyle }) => {
                 )}
                 style={sharedStyle}
                 value={text}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => setText(e.target.value)}
             />
         </div>
     );

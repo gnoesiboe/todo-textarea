@@ -8,23 +8,14 @@ import {
 import { useWindowSize } from '@uidotdev/usehooks';
 import { useTextWidth } from '@tag0/use-text-width';
 import { Sentence } from '../../model/Sentence';
+import Checkbox from './components/Checkbox';
+import useEditorContext from '../../../context/hooks/useEditorContext';
 
-type Props = Pick<HTMLAttributes<HTMLDivElement>, 'className' | 'style'> & {
-    text: string;
-};
+type Props = Pick<HTMLAttributes<HTMLDivElement>, 'className' | 'style'>;
 
-function determineLines(
-    sentences: Sentence[],
-    numberOfCharsPerLine: number,
-): string[] {
-    return sentences.reduce((accumulator: string[], line) => {
-        const splitLines = line.getLines(numberOfCharsPerLine);
+const EditorSidebar: FC<Props> = (divProps) => {
+    const { text } = useEditorContext();
 
-        return [...accumulator, ...splitLines];
-    }, []);
-}
-
-const EditorSidebar: FC<Props> = ({ text, ...divProps }) => {
     const [textAreaWidth, setTextAreaWidth] = useState<number | null>(null);
 
     const { width: windowWidth } = useWindowSize();
@@ -56,29 +47,34 @@ const EditorSidebar: FC<Props> = ({ text, ...divProps }) => {
         : null;
 
     const sentences = text.split('\n').map((text) => Sentence.fromText(text));
-    const lines = determineLines(sentences, numberOfCharsPerLine ?? Infinity);
+    // const lines = determineLines(sentences, numberOfCharsPerLine ?? Infinity);
 
-    const elements: ReactElement[] = lines.map((line, index) => {
-        const trimmedLine = line.trim();
+    const elements = sentences.reduce<ReactElement[]>(
+        (accumulator, sentence, sentenceIndex) => {
+            const lines = sentence.getLines(numberOfCharsPerLine ?? Infinity);
 
-        if (trimmedLine.startsWith('#')) {
-            const checked = /@done/.test(trimmedLine);
+            lines.forEach((line, lineIndex) => {
+                if (line.startsWith('#')) {
+                    const checked = /@done/.test(line);
 
-            return (
-                <label key={index}>
-                    <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => {
-                            // @todo implement
-                        }}
-                    />
-                </label>
-            );
-        }
+                    accumulator.push(
+                        <Checkbox
+                            key={`${sentenceIndex}-${lineIndex}`}
+                            checked={checked}
+                            index={sentenceIndex}
+                        />,
+                    );
+                } else {
+                    accumulator.push(
+                        <div key={accumulator.length}>&nbsp;</div>,
+                    );
+                }
+            });
 
-        return <div key={index}>&nbsp;</div>;
-    });
+            return accumulator;
+        },
+        [],
+    );
 
     return <div {...divProps}>{...elements}</div>;
 };
