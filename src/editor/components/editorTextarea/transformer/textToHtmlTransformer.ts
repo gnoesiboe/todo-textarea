@@ -103,7 +103,7 @@ const flagDriver: TransformerDriver = (text) => {
     const flagRegex1 = /(@[a-z0-9-]+\([^)]*\))/gi;
     const flagRegex2 = /(@[a-z0-9-]+)/gi;
 
-    const className = 'text-orange-200 italic';
+    const className = 'text-orange-400 italic';
 
     return text
         .replaceAll(flagRegex1, `<span class="${className}">$1</span>`)
