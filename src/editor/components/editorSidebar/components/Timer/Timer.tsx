@@ -1,6 +1,5 @@
 import { type FC } from 'react';
 import { Play, Square } from 'react-feather';
-import { twMerge } from 'tailwind-merge';
 import Duration from './components/duration/Duration';
 import useEditorContext from '../../../../../context/hooks/useEditorContext';
 import {
@@ -33,7 +32,7 @@ const Timer: FC<Props> = ({ index }) => {
         case 'stopped': {
             return (
                 <button
-                    className={twMerge(buttonSharedClassNames, 'bg-green-600')}
+                    className={buttonSharedClassNames}
                     onClick={() => {
                         if (startedAtRegex.test(text[index])) {
                             console.warn('Timer already started');
@@ -83,10 +82,7 @@ const Timer: FC<Props> = ({ index }) => {
                         <div>--</div>
                     )}
                     <button
-                        className={twMerge(
-                            buttonSharedClassNames,
-                            'bg-red-500',
-                        )}
+                        className={buttonSharedClassNames}
                         onClick={() => {
                             if (!startedAtRegex.test(sentence)) {
                                 console.warn('Timer not started');
