@@ -1,20 +1,18 @@
-import {
-    type FC,
-    type HTMLAttributes,
-    type ReactElement,
-    useEffect,
-    useState,
-} from 'react';
+import { type FC, type ReactElement, useEffect, useState } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { useTextWidth } from '@tag0/use-text-width';
 import { Sentence } from '../../model/Sentence';
 import Checkbox from './components/checkbox/Checkbox';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import Timer from './components/Timer/Timer';
+import type { SharedStyle } from '../../Editor';
 
-type Props = Pick<HTMLAttributes<HTMLDivElement>, 'className' | 'style'>;
+type Props = {
+    sharedStyle: SharedStyle;
+    className: string;
+};
 
-const EditorSidebar: FC<Props> = (divProps) => {
+const EditorSidebar: FC<Props> = ({ className, sharedStyle }) => {
     const { text } = useEditorContext();
 
     const [textAreaWidth, setTextAreaWidth] = useState<number | null>(null);
@@ -24,7 +22,7 @@ const EditorSidebar: FC<Props> = (divProps) => {
     // measure a single character
     const monospaceFontWidth = useTextWidth({
         text: 'M',
-        font: `${divProps.style?.fontSize} ${divProps.style?.fontFamily}`,
+        font: `${sharedStyle.fontSize} ${sharedStyle.fontFamily}`,
     });
 
     useEffect((): void => {
@@ -61,6 +59,7 @@ const EditorSidebar: FC<Props> = (divProps) => {
                         <div
                             className="flex gap-3 items-center justify-end"
                             key={`${sentenceIndex}-${lineIndex}`}
+                            style={{ height: sharedStyle.lineHeight }}
                         >
                             {!checked && <Timer index={sentenceIndex} />}
                             <Checkbox checked={checked} index={sentenceIndex} />
@@ -68,7 +67,7 @@ const EditorSidebar: FC<Props> = (divProps) => {
                     );
                 } else {
                     accumulator.push(
-                        <div key={accumulator.length}>&nbsp;</div>,
+                        <div key={accumulator.length}>-&nbsp;</div>,
                     );
                 }
             });
@@ -78,7 +77,11 @@ const EditorSidebar: FC<Props> = (divProps) => {
         [],
     );
 
-    return <div {...divProps}>{...elements}</div>;
+    return (
+        <div style={sharedStyle} className={className}>
+            {...elements}
+        </div>
+    );
 };
 
 export default EditorSidebar;
