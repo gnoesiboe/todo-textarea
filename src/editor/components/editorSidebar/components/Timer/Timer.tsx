@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { Play, Square } from 'react-feather';
+import { Play, Loader } from 'react-feather';
 import Duration from './components/duration/Duration';
 import useEditorContext from '../../../../../context/hooks/useEditorContext';
 import {
@@ -110,7 +110,7 @@ const Timer: FC<Props> = ({ index }) => {
                             replaceLine(index, newLine);
                         }}
                     >
-                        <Square size={buttonSize} />
+                        <Loader size={buttonSize} className="animate-spin" />
                     </button>
                 </div>
             );
