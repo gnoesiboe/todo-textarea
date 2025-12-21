@@ -67,7 +67,7 @@ const EditorSidebar: FC<Props> = ({ className, sharedStyle }) => {
                     );
                 } else {
                     accumulator.push(
-                        <div key={accumulator.length}>-&nbsp;</div>,
+                        <div key={accumulator.length}>&nbsp;</div>,
                     );
                 }
             });
