@@ -62,7 +62,7 @@ const EditorSidebar: FC<Props> = (divProps) => {
                             className="flex gap-3 items-center justify-end"
                             key={`${sentenceIndex}-${lineIndex}`}
                         >
-                            <Timer index={sentenceIndex} />
+                            {!checked && <Timer index={sentenceIndex} />}
                             <Checkbox checked={checked} index={sentenceIndex} />
                         </div>,
                     );
