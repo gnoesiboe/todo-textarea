@@ -48,7 +48,6 @@ const EditorSidebar: FC<Props> = (divProps) => {
         : null;
 
     const sentences = text.split('\n').map((text) => Sentence.fromText(text));
-    // const lines = determineLines(sentences, numberOfCharsPerLine ?? Infinity);
 
     const elements = sentences.reduce<ReactElement[]>(
         (accumulator, sentence, sentenceIndex) => {
