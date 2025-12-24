@@ -7,9 +7,7 @@ export type SharedStyle = NonNullable<
 >;
 
 const sharedStyle: SharedStyle = {
-    fontFamily:
-        // '"SF Mono", SFMono-Regular, Menlo, Monaco, "Cascadia Code", Consolas, "Roboto Mono", "Noto Sans Mono", "Droid Sans Mono", "Ubuntu Mono", "DejaVu Sans Mono", "Liberation Mono", "Courier New", Courier, monospace',
-        'Menlo',
+    fontFamily: 'Menlo',
     lineHeight: '24px',
     fontSize: '13px',
 };
