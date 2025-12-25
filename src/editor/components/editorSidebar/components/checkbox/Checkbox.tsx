@@ -2,6 +2,7 @@ import type { ChangeEventHandler, FC } from 'react';
 import useEditorContext from '../../../../../context/hooks/useEditorContext';
 import { formatAsDateTime } from '../../../../../utilities/dateTimeUtilities';
 import { isDoneRegex } from '../../../editorTextarea/transformer/textToHtmlTransformer';
+import { composeClassnames } from '../../../../../utilities/classNameUtilities';
 
 type Props = {
     checked: boolean;
@@ -30,8 +31,12 @@ const Checkbox: FC<Props> = ({ checked, index }) => {
         setText(newText);
     };
 
+    const className = composeClassnames('text-right -mt-0.5 cursor-pointer', {
+        'opacity-20 hover:opacity-100': checked,
+    });
+
     return (
-        <label className="text-right -mt-0.5">
+        <label className={className}>
             <input type="checkbox" checked={checked} onChange={onChange} />
         </label>
     );
