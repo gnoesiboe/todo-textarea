@@ -2,7 +2,7 @@ import { composeClassnames } from '../../../../utilities/classNameUtilities';
 
 type TransformerDriver = (text: string) => string;
 
-const isDoneRegex = /@done/;
+export const isDoneRegex = /@done/;
 
 const primaryHeaderDriver: TransformerDriver = (text) => {
     if (!text.startsWith('# ')) {

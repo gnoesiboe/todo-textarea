@@ -6,6 +6,7 @@ import Checkbox from './components/checkbox/Checkbox';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import Timer from './components/Timer/Timer';
 import type { SharedStyle } from '../../Editor';
+import { isDoneRegex } from '../editorTextarea/transformer/textToHtmlTransformer';
 
 type Props = {
     sharedStyle: SharedStyle;
@@ -53,7 +54,7 @@ const EditorSidebar: FC<Props> = ({ className, sharedStyle }) => {
 
             lines.forEach((line, lineIndex) => {
                 if (line.startsWith('#')) {
-                    const checked = /@done/.test(line);
+                    const checked = isDoneRegex.test(line);
 
                     accumulator.push(
                         <div

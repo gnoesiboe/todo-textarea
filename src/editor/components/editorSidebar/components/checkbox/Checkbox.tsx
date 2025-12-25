@@ -1,6 +1,7 @@
 import type { ChangeEventHandler, FC } from 'react';
 import useEditorContext from '../../../../../context/hooks/useEditorContext';
 import { formatAsDateTime } from '../../../../../utilities/dateTimeUtilities';
+import { isDoneRegex } from '../../../editorTextarea/transformer/textToHtmlTransformer';
 
 type Props = {
     checked: boolean;
@@ -18,7 +19,7 @@ const Checkbox: FC<Props> = ({ checked, index }) => {
                     return line;
                 }
 
-                if (line.includes('@done')) {
+                if (isDoneRegex.test(line)) {
                     return line.replace(/@done\([^)]*\)/g, '');
                 }
 
