@@ -1,7 +1,7 @@
 import type { CSSProperties, FC } from 'react';
 import { transformToHtml } from './transformer/textToHtmlTransformer';
-import { twMerge } from 'tailwind-merge';
 import useEditorContext from '../../../context/hooks/useEditorContext';
+import { composeClassnames } from '../../../utilities/classNameUtilities';
 
 type Props = {
     sharedStyle: CSSProperties;
@@ -16,12 +16,15 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
     return (
         <div className="w-full bg-white h-screen relative">
             <div
-                className={twMerge(sharedClassNames, 'overflow-scroll')}
+                className={composeClassnames(
+                    sharedClassNames,
+                    'overflow-scroll',
+                )}
                 style={sharedStyle}
                 dangerouslySetInnerHTML={{ __html: transformToHtml(text) }}
             />
             <textarea
-                className={twMerge(
+                className={composeClassnames(
                     sharedClassNames,
                     'text-transparent caret-black focus:outline-none focus:ring-0 resize-none',
                 )}

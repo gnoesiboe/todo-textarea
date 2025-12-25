@@ -1,11 +1,20 @@
+import { composeClassnames } from '../../../../utilities/classNameUtilities';
+
 type TransformerDriver = (text: string) => string;
+
+const isDoneRegex = /@done/;
 
 const primaryHeaderDriver: TransformerDriver = (text) => {
     if (!text.startsWith('# ')) {
         return text;
     }
 
-    return `<h1 class="text-black border-b-1 border-slate-400 font-bold bg-slate-100">${text}</h1>`;
+    const className = composeClassnames(
+        'border-b-1 border-slate-400 bg-slate-100',
+        isDoneRegex.test(text) ? 'text-slate-600' : 'text-black font-bold',
+    );
+
+    return `<h1 class="${className}">${text}</h1>`;
 };
 
 const secondaryHeaderDriver: TransformerDriver = (text) => {
@@ -13,7 +22,11 @@ const secondaryHeaderDriver: TransformerDriver = (text) => {
         return text;
     }
 
-    return `<h2 class="text-slate-800 font-bold">${text}</h2>`;
+    const className = composeClassnames(
+        isDoneRegex.test(text) ? 'text-slate-600' : 'text-slate-800 font-bold',
+    );
+
+    return `<h2 class="${className}">${text}</h2>`;
 };
 
 const emptyLineDriver: TransformerDriver = (text) => {
