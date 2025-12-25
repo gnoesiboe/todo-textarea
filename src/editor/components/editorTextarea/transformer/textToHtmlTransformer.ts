@@ -26,7 +26,9 @@ const secondaryHeaderDriver: TransformerDriver = (text) => {
         isDoneRegex.test(text) ? 'text-slate-600' : 'text-slate-800 font-bold',
     );
 
-    return `<h2 class="${className}">${text}</h2>`;
+    const content = text.slice(2);
+
+    return `<h2 class="${className}">└─ ${content}</h2>`;
 };
 
 const emptyLineDriver: TransformerDriver = (text) => {
