@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { EditorContext } from '../editorContext';
+import { EditorContext, type EditorContextValue } from '../editorContext';
 
-export default function useEditorContext() {
+export default function useEditorContext(): EditorContextValue {
     return useContext(EditorContext);
 }

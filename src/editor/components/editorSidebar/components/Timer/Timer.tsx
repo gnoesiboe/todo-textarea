@@ -35,6 +35,7 @@ const Timer: FC<Props> = ({ index }) => {
                     className={buttonSharedClassNames}
                     onClick={() => {
                         if (startedAtRegex.test(text[index])) {
+                            // eslint-disable-next-line no-console
                             console.warn('Timer already started');
 
                             return;
@@ -85,6 +86,7 @@ const Timer: FC<Props> = ({ index }) => {
                         className={buttonSharedClassNames}
                         onClick={() => {
                             if (!startedAtRegex.test(sentence)) {
+                                // eslint-disable-next-line no-console
                                 console.warn('Timer not started');
 
                                 return;
