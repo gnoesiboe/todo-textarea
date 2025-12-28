@@ -1,11 +1,25 @@
-import { type FC, type ReactNode, useEffect, useState } from 'react';
-import { getEditorText, storeEditorText } from '../storage/editorStateStorage';
+import { type FC, type ReactNode, useState } from 'react';
 import { EditorContext, type EditorContextValue } from './editorContext';
+import { usePersistStateToUrl } from './hooks/usePersistStateToUrl';
+import { decodeBase64 } from './utilities/base64utilities';
 
 export const EditorContextProvider: FC<{ children: ReactNode }> = ({
     children,
 }) => {
-    const [text, setText] = useState<string>(getEditorText);
+    const [text, setText] = useState<string>(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+
+        try {
+            const queryParamValue = queryParams.get('text');
+
+            return queryParamValue ? decodeBase64(queryParamValue) : '';
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error);
+
+            return '';
+        }
+    });
 
     const appendToLine: EditorContextValue['appendToLine'] = (
         index,
@@ -40,7 +54,7 @@ export const EditorContextProvider: FC<{ children: ReactNode }> = ({
         });
     };
 
-    useEffect(() => storeEditorText(text), [text]);
+    usePersistStateToUrl(text);
 
     return (
         <EditorContext.Provider
