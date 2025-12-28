@@ -2,6 +2,7 @@ import { composeClassnames } from '../../../../utilities/classNameUtilities';
 
 type TransformerDriver = (
     text: string,
+    lineIndex: number,
     currentLineIndex: number | null,
 ) => string;
 
@@ -151,9 +152,13 @@ export function transformToHtml(
     const lines = text.split('\n');
 
     return lines
-        .map((line) => {
+        .map((line, index) => {
             return drivers.reduce((currentLine, driver) => {
-                const transformedLine = driver(currentLine, currentLineIndex);
+                const transformedLine = driver(
+                    currentLine,
+                    index,
+                    currentLineIndex,
+                );
 
                 return transformedLine;
             }, line);
