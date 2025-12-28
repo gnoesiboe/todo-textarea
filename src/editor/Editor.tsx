@@ -2,7 +2,7 @@ import { type CSSProperties, type FC } from 'react';
 import EditorSidebar from './components/editorSidebar/EditorSidebar';
 import EditorTextarea from './components/editorTextarea/EditorTextarea';
 
-export type SharedStyle = NonNullable<
+export type SharedStyle = Required<
     Pick<CSSProperties, 'fontFamily' | 'lineHeight' | 'fontSize' | 'overflowY'>
 >;
 
@@ -15,7 +15,7 @@ const sharedStyle: SharedStyle = {
 
 const Editor: FC = () => {
     return (
-        <div className="flex gap-4 flex-row max-w-4xl margin-x-auto h-full">
+        <div className="flex gap-4 flex-row max-w-4xl margin-x-auto">
             <EditorSidebar
                 className="bg-amber-400 p-5 w-1/4"
                 sharedStyle={sharedStyle}

@@ -1,4 +1,4 @@
-import { type FC, type ReactElement, useEffect, useState } from 'react';
+import { type ReactElement, useEffect, useState, type FC } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { useTextWidth } from '@tag0/use-text-width';
 import { Sentence } from '../../model/Sentence';
