@@ -1,13 +1,16 @@
-import type { CSSProperties, FC } from 'react';
+import { type CSSProperties, type FC } from 'react';
 import { transformToHtml } from './transformer/textToHtmlTransformer';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import { composeClassnames } from '../../../utilities/classNameUtilities';
+import { useSyncScrollPosition } from './hooks/useSyncScrollPosition';
 
 type Props = {
     sharedStyle: CSSProperties;
 };
 
 const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
+    const { textareaRef, divRef } = useSyncScrollPosition();
+
     const { text, setText } = useEditorContext();
 
     const sharedClassNames =
@@ -22,16 +25,18 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
                 )}
                 style={sharedStyle}
                 dangerouslySetInnerHTML={{ __html: transformToHtml(text) }}
+                ref={divRef}
             />
             <textarea
                 className={composeClassnames(
                     sharedClassNames,
-                    'text-transparent caret-black focus:outline-none focus:ring-0 resize-none',
+                    'text-transparent caret-black focus:outline-none focus:ring-0 resize-none h-full',
                 )}
                 spellCheck={false}
                 style={sharedStyle}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                ref={textareaRef}
             />
         </div>
     );
