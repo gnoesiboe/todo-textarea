@@ -75,7 +75,7 @@ const urlDriver: TransformerDriver = (text) => {
     if (urlRegex.test(text)) {
         return text.replaceAll(
             urlRegex,
-            '<a href="$1" class="text-blue-600 underline" target="_blank" rel="noopener noreferrer">$1</a>',
+            '<span class="text-blue-600 underline" target="_blank" rel="noopener noreferrer">$1</span>',
         );
     }
 
@@ -88,7 +88,7 @@ const inlineCodeDriver: TransformerDriver = (text) => {
     if (regex.test(text)) {
         return text.replace(
             regex,
-            `<code class="bg-slate-200 italic">$1</code>`,
+            `<code class="bg-slate-200 italic text-xs">$1</code>`,
         );
     }
 
