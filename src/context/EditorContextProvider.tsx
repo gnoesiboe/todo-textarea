@@ -3,23 +3,25 @@ import { EditorContext, type EditorContextValue } from './editorContext';
 import { usePersistStateToUrl } from './hooks/usePersistStateToUrl';
 import { decodeBase64 } from './utilities/base64utilities';
 
+function loadTextFromQueryParam(): string {
+    const queryParams = new URLSearchParams(window.location.search);
+
+    try {
+        const queryParamValue = queryParams.get('text');
+
+        return queryParamValue ? decodeBase64(queryParamValue) : '';
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn(error);
+
+        return '';
+    }
+}
+
 export const EditorContextProvider: FC<{ children: ReactNode }> = ({
     children,
 }) => {
-    const [text, setText] = useState<string>(() => {
-        const queryParams = new URLSearchParams(window.location.search);
-
-        try {
-            const queryParamValue = queryParams.get('text');
-
-            return queryParamValue ? decodeBase64(queryParamValue) : '';
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.warn(error);
-
-            return '';
-        }
-    });
+    const [text, setText] = useState<string>(loadTextFromQueryParam);
 
     const appendToLine: EditorContextValue['appendToLine'] = (
         index,
