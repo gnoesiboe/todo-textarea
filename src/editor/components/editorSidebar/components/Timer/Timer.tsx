@@ -1,11 +1,12 @@
 import { type FC } from 'react';
-import { Play, Loader } from 'react-feather';
+import { Play, Loader, Square } from 'react-feather';
 import Duration from './components/duration/Duration';
 import useEditorContext from '../../../../../context/hooks/useEditorContext';
 import {
     formatAsTime,
     formatDuration,
 } from '../../../../../utilities/dateTimeUtilities';
+import { useHover } from '@uidotdev/usehooks';
 
 type Props = {
     index: number;
@@ -17,6 +18,8 @@ const startedAtRegex = /@startedAt\([0-9]{2}:[0-9]{2}:[0-9]{2}\)/;
 
 const Timer: FC<Props> = ({ index }) => {
     const { text, appendToLine, replaceLine } = useEditorContext();
+
+    const [ref, hovering] = useHover();
 
     const sentence = text.split('\n')[index] || '';
 
@@ -76,7 +79,11 @@ const Timer: FC<Props> = ({ index }) => {
             }
 
             return (
-                <div className="flex gap-1 items-center">
+                <div
+                    className="flex gap-1 items-center"
+                    title="Stop timer"
+                    ref={ref}
+                >
                     {startedAt ? (
                         <Duration startedAt={startedAt} />
                     ) : (
@@ -112,7 +119,14 @@ const Timer: FC<Props> = ({ index }) => {
                             replaceLine(index, newLine);
                         }}
                     >
-                        <Loader size={buttonSize} className="animate-spin" />
+                        {hovering ? (
+                            <Square size={buttonSize} />
+                        ) : (
+                            <Loader
+                                size={buttonSize}
+                                className="animate-spin"
+                            />
+                        )}
                     </button>
                 </div>
             );
