@@ -1,6 +1,9 @@
 import { composeClassnames } from '../../../../utilities/classNameUtilities';
 
-type TransformerDriver = (text: string) => string;
+type TransformerDriver = (
+    text: string,
+    currentLineIndex: number | null,
+) => string;
 
 export const isDoneRegex = /@done/;
 
@@ -141,13 +144,16 @@ const drivers: ReadonlyArray<TransformerDriver> = [
     fallbackDriver, // Keep this last
 ];
 
-export function transformToHtml(text: string): string {
+export function transformToHtml(
+    text: string,
+    currentLineIndex: number | null,
+): string {
     const lines = text.split('\n');
 
     return lines
         .map((line) => {
             return drivers.reduce((currentLine, driver) => {
-                const transformedLine = driver(currentLine);
+                const transformedLine = driver(currentLine, currentLineIndex);
 
                 return transformedLine;
             }, line);

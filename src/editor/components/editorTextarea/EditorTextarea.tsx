@@ -17,7 +17,7 @@ type Props = {
 const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    const { text, setText } = useEditorContext();
+    const { text, setText, currentLineIndex } = useEditorContext();
 
     useDetermineCurrentLineNumber(textareaRef.current || null);
 
@@ -49,7 +49,9 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
             <div
                 className={composeClassnames(sharedClassNames)}
                 style={sharedStyle}
-                dangerouslySetInnerHTML={{ __html: transformToHtml(text) }}
+                dangerouslySetInnerHTML={{
+                    __html: transformToHtml(text, currentLineIndex),
+                }}
             />
             <textarea
                 className={composeClassnames(
