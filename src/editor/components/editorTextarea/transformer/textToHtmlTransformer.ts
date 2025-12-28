@@ -52,6 +52,19 @@ const urlDriver: TransformerDriver = (text) => {
     return text;
 };
 
+const inlineCodeDriver: TransformerDriver = (text) => {
+    const regex = /(`[^`]+`)/g;
+
+    if (regex.test(text)) {
+        return text.replace(
+            regex,
+            `<code class="bg-slate-200 italic">$1</code>`,
+        );
+    }
+
+    return text;
+};
+
 const openTodoDriver: TransformerDriver = (text) => {
     if (text.startsWith('- [ ] ')) {
         const content = text.slice(6);
@@ -122,9 +135,10 @@ const drivers: ReadonlyArray<TransformerDriver> = [
     listItemDriver, // Keep behind todo drivers
     flagDriver,
     urlDriver,
+    inlineCodeDriver,
     horizontalRuleDriver,
     emptyLineDriver,
-    fallbackDriver,
+    fallbackDriver, // Keep this last
 ];
 
 export function transformToHtml(text: string): string {
