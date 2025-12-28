@@ -132,11 +132,21 @@ const listItemDriver: TransformerDriver = (text) => {
     return text;
 };
 
-const horizontalRuleDriver: TransformerDriver = (text) => {
+const horizontalRuleDriver: TransformerDriver = (
+    text,
+    lineIndex,
+    currentLineIndex,
+) => {
     if (/^---+$/.test(text.trim())) {
-        return `<div class="border-b border-slate-300">${'&nbsp;'.repeat(
-            text.length,
-        )}</div>`;
+        const isCurrentLine = lineIndex === currentLineIndex;
+
+        if (isCurrentLine) {
+            return `<div class="text-slate-300">${text}</div>`;
+        } else {
+            return `<div class="border-b border-slate-300">${'&nbsp;'.repeat(
+                text.length,
+            )}</div>`;
+        }
     }
 
     return text;
