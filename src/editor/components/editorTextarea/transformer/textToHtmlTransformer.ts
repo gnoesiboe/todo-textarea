@@ -134,7 +134,7 @@ const listItemDriver: TransformerDriver = (text) => {
 
 const horizontalRuleDriver: TransformerDriver = (text) => {
     if (/^---+$/.test(text.trim())) {
-        return `<div class="border-b-1 border-slate-300">${'&nbsp;'.repeat(
+        return `<div class="border-b border-slate-300">${'&nbsp;'.repeat(
             text.length,
         )}</div>`;
     }
