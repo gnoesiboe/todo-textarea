@@ -1,5 +1,9 @@
 import { type FC, type ReactNode, useState } from 'react';
-import { EditorContext, type EditorContextValue } from './editorContext';
+import {
+    EditorContext,
+    type EditorContextState,
+    type EditorContextValue,
+} from './editorContext';
 import { usePersistStateToUrl } from './hooks/usePersistStateToUrl';
 import { decodeBase64 } from './utilities/base64utilities';
 
@@ -21,14 +25,19 @@ function loadTextFromQueryParam(): string {
 export const EditorContextProvider: FC<{ children: ReactNode }> = ({
     children,
 }) => {
-    const [text, setText] = useState<string>(loadTextFromQueryParam);
+    const [state, setState] = useState<EditorContextState>(() => {
+        return {
+            text: loadTextFromQueryParam(),
+            currentLineIndex: null,
+        };
+    });
 
     const appendToLine: EditorContextValue['appendToLine'] = (
         index,
         textToAppend,
     ) => {
-        setText((currentText) => {
-            return currentText
+        setState((currentState) => {
+            const newText = currentState.text
                 .split('\n')
                 .map((line, lineIndex) => {
                     if (lineIndex === index) {
@@ -38,12 +47,14 @@ export const EditorContextProvider: FC<{ children: ReactNode }> = ({
                     return line;
                 })
                 .join('\n');
+
+            return { ...currentState, text: newText };
         });
     };
 
     const replaceLine: EditorContextValue['replaceLine'] = (index, newLine) => {
-        setText((currentText) => {
-            return currentText
+        setState((currentState) => {
+            const newText = currentState.text
                 .split('\n')
                 .map((line, lineIndex) => {
                     if (lineIndex === index) {
@@ -53,14 +64,38 @@ export const EditorContextProvider: FC<{ children: ReactNode }> = ({
                     return line;
                 })
                 .join('\n');
+
+            return { ...currentState, text: newText };
         });
     };
 
-    usePersistStateToUrl(text);
+    const setCurrentLineIndex: EditorContextValue['setCurrentLineIndex'] = (
+        index,
+    ) => {
+        setState((currentState) => ({
+            ...currentState,
+            currentLineIndex: index,
+        }));
+    };
+
+    const setText: EditorContextValue['setText'] = (text) => {
+        setState((currentState) => ({
+            ...currentState,
+            text,
+        }));
+    };
+
+    usePersistStateToUrl(state.text);
 
     return (
         <EditorContext.Provider
-            value={{ text, setText, appendToLine, replaceLine }}
+            value={{
+                ...state,
+                setText,
+                appendToLine,
+                replaceLine,
+                setCurrentLineIndex,
+            }}
         >
             {children}
         </EditorContext.Provider>

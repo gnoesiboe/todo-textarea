@@ -8,6 +8,7 @@ import {
 import { transformToHtml } from './transformer/textToHtmlTransformer';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import { composeClassnames } from '../../../utilities/classNameUtilities';
+import { useDetermineCurrentLineNumber } from './hooks/useDetermineCurrentLineNumber';
 
 type Props = {
     sharedStyle: CSSProperties;
@@ -17,6 +18,8 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const { text, setText } = useEditorContext();
+
+    useDetermineCurrentLineNumber(textareaRef.current || null);
 
     const resizeTextareaToContents = useCallback((): void => {
         if (!textareaRef.current) {
