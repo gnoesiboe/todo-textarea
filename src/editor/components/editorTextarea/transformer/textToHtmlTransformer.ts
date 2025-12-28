@@ -8,31 +8,57 @@ type TransformerDriver = (
 
 export const isDoneRegex = /@done/;
 
-const primaryHeaderDriver: TransformerDriver = (text) => {
-    if (!text.startsWith('# ')) {
+const primaryHeaderDriver: TransformerDriver = (
+    text,
+    lineIndex,
+    currentLineIndex,
+) => {
+    const expectedPrefix = '# ';
+
+    if (!text.startsWith(expectedPrefix)) {
         return text;
     }
+
+    const isCurrentLine = lineIndex === currentLineIndex;
 
     const className = composeClassnames(
         'border-b-1 border-slate-400 bg-slate-100',
-        isDoneRegex.test(text) ? 'text-slate-600' : 'text-black font-bold',
+        isDoneRegex.test(text) && !isCurrentLine
+            ? 'text-slate-600'
+            : 'text-black font-bold',
     );
 
-    return `<h1 class="${className}">${text}</h1>`;
+    const content = text.slice(expectedPrefix.length);
+
+    const prefix = isCurrentLine ? expectedPrefix : '';
+
+    return `<h1 class="${className}">${prefix}${content}</h1>`;
 };
 
-const secondaryHeaderDriver: TransformerDriver = (text) => {
-    if (!text.startsWith('## ')) {
+const secondaryHeaderDriver: TransformerDriver = (
+    text,
+    lineIndex,
+    currentLineIndex,
+) => {
+    const expectedPrefix = '## ';
+
+    if (!text.startsWith(expectedPrefix)) {
         return text;
     }
 
+    const isCurrentLine = lineIndex === currentLineIndex;
+
     const className = composeClassnames(
-        isDoneRegex.test(text) ? 'text-slate-600' : 'text-slate-800 font-bold',
+        isDoneRegex.test(text) && !isCurrentLine
+            ? 'text-slate-600'
+            : 'text-slate-800 font-bold',
     );
 
     const content = text.slice(2);
 
-    return `<h2 class="${className}">└─ ${content}</h2>`;
+    const prefix = isCurrentLine ? expectedPrefix : '';
+
+    return `<h2 class="${className}">${prefix}${content}</h2>`;
 };
 
 const emptyLineDriver: TransformerDriver = (text) => {
