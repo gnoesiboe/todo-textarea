@@ -53,7 +53,7 @@ const EditorSidebar: FC<Props> = ({ className, sharedStyle }) => {
             const lines = sentence.getLines(numberOfCharsPerLine ?? Infinity);
 
             lines.forEach((line, lineIndex) => {
-                if (line.startsWith('#')) {
+                if (line.startsWith('## ')) {
                     const checked = isDoneRegex.test(line);
 
                     accumulator.push(

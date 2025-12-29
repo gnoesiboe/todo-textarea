@@ -35,7 +35,7 @@ const primaryHeaderDriver: TransformerDriver = (
     return `<h1 class="${className}">${prefix}${content}</h1>`;
 };
 
-const secondaryHeaderDriver: TransformerDriver = (
+const primaryTodoDriver: TransformerDriver = (
     text,
     lineIndex,
     currentLineIndex,
@@ -169,7 +169,7 @@ const flagDriver: TransformerDriver = (text) => {
 
 const drivers: ReadonlyArray<TransformerDriver> = [
     primaryHeaderDriver,
-    secondaryHeaderDriver,
+    primaryTodoDriver,
     doneTodoDriver,
     openTodoDriver,
     listItemDriver, // Keep behind todo drivers
