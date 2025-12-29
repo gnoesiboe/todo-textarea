@@ -49,6 +49,7 @@ const Timer: FC<Props> = ({ index }) => {
                             ` @startedAt(${formatAsTime(new Date())})`,
                         );
                     }}
+                    title="Start timer"
                 >
                     <Play size={buttonSize} />
                 </button>
