@@ -1,3 +1,5 @@
 # Todo textarea
 
-This features a todo app that has a textarea that allows you to compose todo lists on the fly. There is some basic Markdown syntax highlighting. The text is saved in the URL, so you can easily share your todo list with others or with your other devices. Nothing is stored on the server.
+This repository contains a todo app living in the browser, that stores its state in the URL. As a user, you type inside a textarea. The contents is parsed and rendered behind the textarea. The textarea contents itself is hidden. This gives the feeling of writing formatted text, but the freedom of the textarea remains.
+
+For each primary level todo you can also start and stop timers.
