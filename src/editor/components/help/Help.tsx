@@ -2,7 +2,7 @@ import { useState, type FC } from 'react';
 import { Term } from './components/Term';
 import { Description } from './components/Description';
 import { Preview } from './components/Preview';
-import { X } from 'react-feather';
+import { X, HelpCircle } from 'react-feather';
 
 export const Help: FC = () => {
     const [expanded, setExpanded] = useState<boolean>(false);
@@ -82,12 +82,12 @@ export const Help: FC = () => {
     return (
         <button
             type="button"
-            className="rounded hover:underline p-4 hover:cursor-pointer text-sm m-4"
+            className="rounded hover:underline p-4 hover:cursor-pointer text-sm flex items-center gap-1"
             onClick={() => {
                 setExpanded((current) => !current);
             }}
         >
-            help
+            <HelpCircle size={13} /> help
         </button>
     );
 };
