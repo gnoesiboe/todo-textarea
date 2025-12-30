@@ -21,7 +21,7 @@ const Editor: FC = () => {
             <div className="fixed bottom-0 left-0 z-40">
                 <Help />
             </div>
-            <div className="fixed top-0 right-0 z-40">
+            <div className="fixed bottom-0 right-0 z-40">
                 <Share />
             </div>
             <EditorSidebar
