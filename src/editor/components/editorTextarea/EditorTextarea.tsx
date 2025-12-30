@@ -64,6 +64,7 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
                 onChange={(e) => setText(e.target.value)}
                 onKeyUp={() => resizeTextareaToContents()}
                 ref={textareaRef}
+                placeholder="Start typing. See 'help' for available syntax."
             />
         </div>
     );
