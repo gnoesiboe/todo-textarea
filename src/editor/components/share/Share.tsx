@@ -14,6 +14,7 @@ export const Share: FC = () => {
             className="p-4 cursor-pointer"
             target="_blank"
             rel="noreferrer noopener"
+            title="Send an email with this todo list in it"
             onClick={(event) => {
                 event.stopPropagation();
             }}
