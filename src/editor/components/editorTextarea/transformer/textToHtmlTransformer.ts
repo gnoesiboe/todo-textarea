@@ -49,9 +49,7 @@ const primaryTodoDriver: TransformerDriver = (
     const isCurrentLine = lineIndex === currentLineIndex;
 
     const className = composeClassnames(
-        isDoneRegex.test(text) && !isCurrentLine
-            ? 'text-slate-600'
-            : 'text-slate-800 font-bold',
+        isDoneRegex.test(text) ? 'text-slate-600' : 'text-slate-800 font-bold',
     );
 
     const content = text.slice(2);
