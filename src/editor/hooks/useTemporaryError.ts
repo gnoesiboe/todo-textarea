@@ -15,7 +15,7 @@ export function useTemporaryError(timeoutMs: number): Output {
         const handle = setTimeout(() => setError(null), timeoutMs);
 
         return () => clearTimeout(handle);
-    }, [error]);
+    }, [error, timeoutMs]);
 
     return {
         error,
