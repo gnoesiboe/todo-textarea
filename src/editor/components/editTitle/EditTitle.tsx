@@ -16,7 +16,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
     const [formState, setFormState] = useState<FormState>({ title: title });
     const { error, setError, clearError } = useTemporaryError(1000);
 
-    const submit = () => {
+    const submit = (): void => {
         const normalizedTitle = formState.title.trim();
         if (normalizedTitle.length === 0) {
             setError('Missing');
