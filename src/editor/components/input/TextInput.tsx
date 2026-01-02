@@ -3,7 +3,7 @@ import { AlertTriangle } from 'react-feather';
 
 type Props = Pick<
     InputHTMLAttributes<HTMLInputElement>,
-    'value' | 'className' | 'placeholder' | 'title' | 'autoFocus'
+    'value' | 'className' | 'placeholder' | 'title' | 'autoFocus' | 'onBlur'
 > & {
     label: string;
     onChange: (newValue: string) => void;

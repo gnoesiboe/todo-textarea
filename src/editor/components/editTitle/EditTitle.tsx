@@ -16,6 +16,29 @@ export const EditTitle: FC<Props> = ({ title }) => {
     const [formState, setFormState] = useState<FormState>({ title: title });
     const { error, setError, clearError } = useTemporaryError(1000);
 
+    const submit = () => {
+        const normalizedTitle = formState.title.trim();
+        if (normalizedTitle.length === 0) {
+            setError('Missing');
+
+            return;
+        }
+
+        // Update browser window title
+        document.title = normalizedTitle;
+
+        // Update state in URL
+        const url = new URL(window.location.toString());
+        url.searchParams.set('title', normalizedTitle);
+        history.pushState({}, '', url);
+
+        if (document.activeElement instanceof HTMLInputElement) {
+            document.activeElement.blur();
+        }
+
+        clearError();
+    };
+
     return (
         <form
             className="flex justify-end"
@@ -23,26 +46,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
                 // Prevent browser submitting to server
                 event.preventDefault();
 
-                const normalizedTitle = formState.title.trim();
-                if (normalizedTitle.length === 0) {
-                    setError('Missing');
-
-                    return;
-                }
-
-                // Update browser window title
-                document.title = normalizedTitle;
-
-                // Update state in URL
-                const url = new URL(window.location.toString());
-                url.searchParams.set('title', normalizedTitle);
-                history.pushState({}, '', url);
-
-                if (document.activeElement instanceof HTMLInputElement) {
-                    document.activeElement.blur();
-                }
-
-                clearError();
+                submit();
             }}
         >
             <TextInput
@@ -56,6 +60,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
                         title: value,
                     }));
                 }}
+                onBlur={() => submit()}
                 title="Edit title"
                 label="title"
                 error={error || undefined}
