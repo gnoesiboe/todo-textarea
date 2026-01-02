@@ -15,7 +15,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
 
     return (
         <form
-            className="flex justify-end gap-2 bg-stone-400 p-2"
+            className="flex justify-end"
             onSubmit={(event) => {
                 // Prevent browser submitting to server
                 event.preventDefault();

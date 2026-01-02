@@ -28,7 +28,9 @@ const Editor: FC = () => {
             <div className="fixed bottom-0 right-0 z-40">
                 <Share />
             </div>
-            <EditTitle title={title} />
+            <div className="bg-stone-400 p-2">
+                <EditTitle title={title} />
+            </div>
             <div className="flex gap-4 flex-row">
                 <EditorSidebar
                     className="bg-stone-300 p-5 w-1/4"
