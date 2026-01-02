@@ -6,6 +6,7 @@ import { Share } from './components/share/Share';
 import { useTitle } from './hooks/useTitle';
 import { EditTitle } from './components/editTitle/EditTitle';
 import { Plus } from 'react-feather';
+import { MergeIn } from './components/mergeIn/MergeIn';
 
 export type SharedStyle = Required<
     Pick<CSSProperties, 'fontFamily' | 'lineHeight' | 'fontSize' | 'overflowY'>
@@ -30,14 +31,17 @@ const Editor: FC = () => {
                 <Share />
             </div>
             <div className="bg-stone-400 p-2 flex justify-between items-center">
-                <a
-                    href="?text="
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    title="Creeate new list"
-                >
-                    <Plus size={14} />
-                </a>
+                <div className="flex gap-2 items-center">
+                    <a
+                        href="?text="
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        title="Creeate new list"
+                    >
+                        <Plus size={14} />
+                    </a>
+                    <MergeIn />
+                </div>
                 <EditTitle title={title} />
             </div>
             <div className="flex gap-4 flex-row">
