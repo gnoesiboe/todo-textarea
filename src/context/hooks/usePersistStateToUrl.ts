@@ -11,7 +11,7 @@ export function usePersistStateToUrl(text: string): void {
 
             const url = new URL(window.location.toString());
             url.searchParams.set('text', encodeBase64(text));
-            history.pushState({}, '', url);
+            history.replaceState({}, '', url);
         }, persistTimeoutInMs);
 
         return () => clearTimeout(handle);

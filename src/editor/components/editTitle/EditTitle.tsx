@@ -30,7 +30,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
         // Update state in URL
         const url = new URL(window.location.toString());
         url.searchParams.set('title', normalizedTitle);
-        history.pushState({}, '', url);
+        history.replaceState({}, '', url);
 
         if (document.activeElement instanceof HTMLInputElement) {
             document.activeElement.blur();
