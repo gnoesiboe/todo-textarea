@@ -3,7 +3,8 @@ import EditorSidebar from './components/editorSidebar/EditorSidebar';
 import EditorTextarea from './components/editorTextarea/EditorTextarea';
 import { Help } from './components/help/Help';
 import { Share } from './components/share/Share';
-import { Title } from './components/title/Title';
+import { useTitle } from './hooks/useTitle';
+import { EditTitle } from './components/editTitle/EditTitle';
 
 export type SharedStyle = Required<
     Pick<CSSProperties, 'fontFamily' | 'lineHeight' | 'fontSize' | 'overflowY'>
@@ -17,6 +18,8 @@ const sharedStyle: SharedStyle = {
 };
 
 const Editor: FC = () => {
+    const { title } = useTitle();
+
     return (
         <div className="max-w-4xl margin-x-auto relative">
             <div className="fixed bottom-0 left-0 z-40">
@@ -25,7 +28,7 @@ const Editor: FC = () => {
             <div className="fixed bottom-0 right-0 z-40">
                 <Share />
             </div>
-            <Title />
+            <EditTitle title={title} />
             <div className="flex gap-4 flex-row">
                 <EditorSidebar
                     className="bg-stone-300 p-5 w-1/4"
