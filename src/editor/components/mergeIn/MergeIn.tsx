@@ -3,6 +3,8 @@ import { GitMerge } from 'react-feather';
 import { decodeBase64 } from '../../../context/utilities/base64utilities';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import { toast } from 'react-toastify';
+import { TextInput } from '../input/TextInput';
+import { useTemporaryError } from '../../hooks/useTemporaryError';
 
 type FormState = {
     url: string;
@@ -13,6 +15,7 @@ export const MergeIn: FC = () => {
     const [formState, setFormState] = useState<FormState>({
         url: '',
     });
+    const { error, setError, clearError } = useTemporaryError(1000);
 
     const { text, setText } = useEditorContext();
 
@@ -28,7 +31,7 @@ export const MergeIn: FC = () => {
         event.preventDefault();
 
         if (!formState.url) {
-            toast.warning('no url provided');
+            setError('no url');
 
             return;
         }
@@ -39,7 +42,7 @@ export const MergeIn: FC = () => {
         } catch {
             resetUrlFieldValue();
 
-            toast.warning('Could not parse url');
+            setError('invalid url');
 
             return;
         }
@@ -50,7 +53,7 @@ export const MergeIn: FC = () => {
         if (!encodedIncomingText) {
             resetUrlFieldValue();
 
-            toast.warning("URL does not have a 'text' query param to parse");
+            setError('no text param');
 
             return;
         }
@@ -62,11 +65,12 @@ export const MergeIn: FC = () => {
 
             toast.success('Content merged in at the bottom');
 
+            clearError();
             resetUrlFieldValue();
         } catch {
             resetUrlFieldValue();
 
-            toast.warning('Could not decode text query param');
+            setError('could not decode');
 
             return;
         }
@@ -75,18 +79,16 @@ export const MergeIn: FC = () => {
     if (showForm) {
         return (
             <form className="flex gap-2 items-center" onSubmit={onFormSubmit}>
-                <input
+                <TextInput
                     autoFocus
-                    type="text"
-                    aria-label="url"
                     placeholder="paste the url here.."
                     className="px-2 py-1"
                     value={formState.url}
-                    onChange={(event) => {
-                        setFormState({
-                            url: event.target.value,
-                        });
+                    onChange={(value) => {
+                        setFormState({ url: value });
                     }}
+                    label="url"
+                    error={error || undefined}
                 />
                 <button
                     type="submit"

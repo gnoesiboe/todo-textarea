@@ -1,5 +1,6 @@
 import { useState, type FC } from 'react';
-import { toast } from 'react-toastify';
+import { TextInput } from '../input/TextInput';
+import { useTemporaryError } from '../../hooks/useTemporaryError';
 
 export type OnValidSubmitHandler = (title: string) => void;
 
@@ -13,6 +14,7 @@ type FormState = {
 
 export const EditTitle: FC<Props> = ({ title }) => {
     const [formState, setFormState] = useState<FormState>({ title: title });
+    const { error, setError, clearError } = useTemporaryError(1000);
 
     return (
         <form
@@ -23,7 +25,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
 
                 const normalizedTitle = formState.title.trim();
                 if (normalizedTitle.length === 0) {
-                    toast.warning('No title supplied');
+                    setError('Missing');
 
                     return;
                 }
@@ -40,22 +42,23 @@ export const EditTitle: FC<Props> = ({ title }) => {
                     document.activeElement.blur();
                 }
 
-                toast.success('Title updated');
+                clearError();
             }}
         >
-            <input
-                type="text"
+            <TextInput
                 value={formState.title}
                 aria-label="title"
                 placeholder="Title"
                 className="p-1 bg-transparent border border-stone-400 hover:border-stone-300 rounded border-dashed cursor-text text-stone-100 focus:outline-0 text-right"
-                onChange={(event) => {
+                onChange={(value) => {
                     setFormState((current) => ({
                         ...current,
-                        title: event.target.value,
+                        title: value,
                     }));
                 }}
                 title="Edit title"
+                label="title"
+                error={error || undefined}
             />
         </form>
     );
