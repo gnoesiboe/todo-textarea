@@ -1,5 +1,6 @@
 import type { FC, InputHTMLAttributes } from 'react';
 import { AlertTriangle } from 'react-feather';
+import { composeClassnames } from '../../../utilities/classNameUtilities';
 
 type Props = Pick<
     InputHTMLAttributes<HTMLInputElement>,
@@ -14,8 +15,11 @@ export const TextInput: FC<Props> = ({
     label,
     onChange: onChangeHandler,
     error,
+    className: additionalClassname,
     ...inputProps
 }) => {
+    const className = composeClassnames(additionalClassname, 'focus:ring-0');
+
     return (
         <span className="flex gap-2 items-center">
             <input
@@ -23,6 +27,7 @@ export const TextInput: FC<Props> = ({
                 type="text"
                 aria-label={label}
                 onChange={(event) => onChangeHandler(event.target.value)}
+                className={className}
             />
             {error && (
                 <span className="text-red-600 text-sm flex gap-1 items-center">
