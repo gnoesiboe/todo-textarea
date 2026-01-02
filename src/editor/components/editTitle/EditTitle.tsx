@@ -15,7 +15,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
 
     return (
         <form
-            className="flex justify-end gap-2 bg-stone-500 p-2"
+            className="flex justify-end gap-2 bg-stone-400 p-2"
             onSubmit={(event) => {
                 // Prevent browser submitting to server
                 event.preventDefault();
@@ -43,7 +43,7 @@ export const EditTitle: FC<Props> = ({ title }) => {
                 value={formState.title}
                 aria-label="title"
                 placeholder="Title"
-                className="p-1 bg-transparent border border-stone-500 hover:border-stone-300 border-dashed cursor-text text-stone-100 focus:outline-0 text-right"
+                className="p-1 bg-transparent border border-stone-400 hover:border-stone-300 rounded border-dashed cursor-text text-stone-100 focus:outline-0 text-right"
                 onChange={(event) => {
                     setFormState((current) => ({
                         ...current,
