@@ -92,9 +92,16 @@ export const MergeIn: FC = () => {
                 />
                 <button
                     type="submit"
-                    className="bg-white opacity-60 hover:opacity-100 cursor-pointer p-1"
+                    className="bg-white opacity-60 hover:opacity-100 cursor-pointer px-2 py-1 text-nowrap"
                 >
-                    save
+                    merge in
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setShowForm(false)}
+                    className="cursor-pointer opacity-50 hover:opacity-100 text-sm"
+                >
+                    cancel
                 </button>
             </form>
         );
