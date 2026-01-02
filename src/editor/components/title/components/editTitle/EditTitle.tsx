@@ -33,7 +33,9 @@ export const EditTitle: FC<Props> = ({ title }) => {
                 url.searchParams.set('title', normalizedTitle);
                 history.pushState({}, '', url);
 
-                setShowSubmit(false);
+                if (document.activeElement instanceof HTMLInputElement) {
+                    document.activeElement.blur();
+                }
             }}
         >
             <input
