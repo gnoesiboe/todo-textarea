@@ -12,7 +12,7 @@ type Props = {
 const Checkbox: FC<Props> = ({ checked, index }) => {
     const { text, setText } = useEditorContext();
 
-    const onChange: ChangeEventHandler<HTMLInputElement> = () => {
+    const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const newText = text
             .split('\n')
             .map((line, lineIndex) => {
@@ -29,6 +29,9 @@ const Checkbox: FC<Props> = ({ checked, index }) => {
             .join('\n');
 
         setText(newText);
+
+        // Blur field afterwards
+        event.target.blur();
     };
 
     const className = composeClassnames('text-right -mt-0.5 cursor-pointer', {
