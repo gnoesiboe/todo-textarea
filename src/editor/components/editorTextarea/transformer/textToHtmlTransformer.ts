@@ -22,9 +22,9 @@ const primaryHeaderDriver: TransformerDriver = (
     const isCurrentLine = lineIndex === currentLineIndex;
 
     const className = composeClassnames(
-        'border-b-1 border-slate-400 bg-slate-100',
+        'border-b-1 border-bone-400 bg-stone-100',
         isDoneRegex.test(text) && !isCurrentLine
-            ? 'text-slate-600'
+            ? 'text-stone-600'
             : 'text-black font-bold',
     );
 

@@ -28,7 +28,7 @@ const Editor: FC = () => {
             <Title />
             <div className="flex gap-4 flex-row">
                 <EditorSidebar
-                    className="bg-amber-400 p-5 w-1/4"
+                    className="bg-stone-300 p-5 w-1/4"
                     sharedStyle={sharedStyle}
                 />
                 <EditorTextarea sharedStyle={sharedStyle} />
