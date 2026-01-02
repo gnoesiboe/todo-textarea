@@ -1,4 +1,5 @@
 import { useState, type FC } from 'react';
+import { toast } from 'react-toastify';
 
 export type OnValidSubmitHandler = (title: string) => void;
 
@@ -22,6 +23,8 @@ export const EditTitle: FC<Props> = ({ title }) => {
 
                 const normalizedTitle = formState.title.trim();
                 if (normalizedTitle.length === 0) {
+                    toast.warning('No title supplied');
+
                     return;
                 }
 
@@ -36,6 +39,8 @@ export const EditTitle: FC<Props> = ({ title }) => {
                 if (document.activeElement instanceof HTMLInputElement) {
                     document.activeElement.blur();
                 }
+
+                toast.success('Title updated');
             }}
         >
             <input
