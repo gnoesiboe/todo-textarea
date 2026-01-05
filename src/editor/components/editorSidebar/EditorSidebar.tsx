@@ -54,7 +54,7 @@ const EditorSidebar: FC<Props> = ({ className, sharedStyle }) => {
 
             lines.forEach((line, lineIndex) => {
                 if (line.startsWith('## ')) {
-                    const checked = isDoneRegex.test(line);
+                    const checked = isDoneRegex.test(sentence.text);
 
                     accumulator.push(
                         <div
