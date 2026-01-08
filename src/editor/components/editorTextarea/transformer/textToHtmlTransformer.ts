@@ -30,33 +30,25 @@ const primaryHeaderDriver: TransformerDriver = (
 
     const content = text.slice(expectedPrefix.length);
 
-    const prefix = isCurrentLine ? expectedPrefix : '';
-
-    return `<h1 class="${className}">${prefix}${content}</h1>`;
+    return `<h1 class="${className}">${expectedPrefix}${content}</h1>`;
 };
 
-const primaryTodoDriver: TransformerDriver = (
-    text,
-    lineIndex,
-    currentLineIndex,
-) => {
+const primaryTodoDriver: TransformerDriver = (text) => {
     const expectedPrefix = '## ';
 
     if (!text.startsWith(expectedPrefix)) {
         return text;
     }
 
-    const isCurrentLine = lineIndex === currentLineIndex;
-
     const className = composeClassnames(
-        isDoneRegex.test(text) ? 'text-slate-600' : 'text-slate-800 font-bold',
+        isDoneRegex.test(text)
+            ? 'text-slate-600 line-through'
+            : 'text-slate-800 font-bold',
     );
 
     const content = text.slice(2);
 
-    const prefix = isCurrentLine ? expectedPrefix : '';
-
-    return `<h2 class="${className}">${prefix}${content}</h2>`;
+    return `<h2><span class="text-slate-400">${expectedPrefix}</span><span class="${className}">${content}</span></h2>`;
 };
 
 const emptyLineDriver: TransformerDriver = (text) => {
