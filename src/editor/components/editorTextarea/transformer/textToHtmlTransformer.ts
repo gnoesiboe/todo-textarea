@@ -160,7 +160,14 @@ const primaryTodoDriver: TransformerDriver = (text, { isTodo }) => {
         return text;
     }
 
-    return `<span class="font-bold">${text}</span>`;
+    const isDone = isDoneRegex.test(text);
+
+    const className = composeClassnames({
+        'line-through': isDone,
+        'font-bold': !isDone,
+    });
+
+    return `<span class="${className}" data-id="todo">${text}</span>`;
 };
 
 const quoteDriver: TransformerDriver = (text) => {
