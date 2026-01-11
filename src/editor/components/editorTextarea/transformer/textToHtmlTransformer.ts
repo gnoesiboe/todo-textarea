@@ -117,6 +117,19 @@ const listItemDriver: TransformerDriver = (text) => {
     return text;
 };
 
+const horizontalRuleDriver: TransformerDriver = (
+    text,
+    { lineIndex, currentLineIndex },
+) => {
+    if (!text.startsWith('---')) {
+        return text;
+    }
+
+    const isCurrentLine = lineIndex === currentLineIndex;
+
+    return `<span class="text-slate-300">${isCurrentLine ? text : '–'.repeat(text.length)}</span>`;
+};
+
 const fallbackDriver: TransformerDriver = (text) => {
     return `<div class="text-slate-600">${text}</div>`;
 };
@@ -170,6 +183,7 @@ const drivers: ReadonlyArray<TransformerDriver> = [
     doneSecondaryTodoDriver,
     openSecondaryTodoDriver,
     listItemDriver, // Keep behind todo drivers
+    horizontalRuleDriver,
     flagDriver,
     urlDriver,
     inlineCodeDriver,

@@ -96,6 +96,15 @@ export const Help: FC = () => {
                                 <p>Add a quote block.</p>
                                 <Preview value="> some quoted text" />
                             </Description>
+
+                            <Term term="---" />
+                            <Description>
+                                <p>
+                                    Add a horizontal line by adding at minimum 3
+                                    dashes.
+                                </p>
+                                <Preview value="-------------------------" />
+                            </Description>
                         </div>
                     </div>
                 </section>
