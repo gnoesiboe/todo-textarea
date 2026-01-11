@@ -6,7 +6,7 @@ type TransformerDriver = (
     settings: {
         lineIndex: number;
         currentLineIndex: number | null;
-        isTodo: boolean;
+        sentenceIsTodo: boolean;
     },
 ) => string;
 
@@ -80,7 +80,7 @@ const inlineCodeDriver: TransformerDriver = (text) => {
     return text;
 };
 
-const openTodoDriver: TransformerDriver = (text) => {
+const openSecondaryTodoDriver: TransformerDriver = (text) => {
     if (text.startsWith('- [ ] ')) {
         const content = text.slice(6);
 
@@ -90,7 +90,7 @@ const openTodoDriver: TransformerDriver = (text) => {
     return text;
 };
 
-const doneTodoDriver: TransformerDriver = (text) => {
+const doneSecondaryTodoDriver: TransformerDriver = (text) => {
     if (text.startsWith('- [x] ')) {
         const content = text.slice(6);
 
@@ -151,7 +151,10 @@ const flagDriver: TransformerDriver = (text) => {
         .replaceAll(flagRegex2, `<span class="${className}">$1</span>`);
 };
 
-const primaryTodoDriver: TransformerDriver = (text, { isTodo }) => {
+const primaryTodoDriver: TransformerDriver = (
+    text,
+    { sentenceIsTodo: isTodo },
+) => {
     if (!isTodo) {
         return text;
     }
@@ -183,8 +186,8 @@ const drivers: ReadonlyArray<TransformerDriver> = [
     secondaryHeaderDriver,
     primaryTodoDriver,
     quoteDriver,
-    doneTodoDriver,
-    openTodoDriver,
+    doneSecondaryTodoDriver,
+    openSecondaryTodoDriver,
     listItemDriver, // Keep behind todo drivers
     flagDriver,
     urlDriver,
@@ -206,7 +209,7 @@ export function transformToHtml(
                 const transformedLine = driver(currentSentenceText, {
                     lineIndex: index,
                     currentLineIndex,
-                    isTodo: sentence.isTodo,
+                    sentenceIsTodo: sentence.isTodo,
                 });
 
                 return transformedLine;
