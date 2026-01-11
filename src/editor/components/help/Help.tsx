@@ -20,7 +20,13 @@ export const Help: FC = () => {
                 >
                     <X size={13} />
                 </button>
-                <section className="p-4 space-y-4 w-full h-full overflow-y-scroll">
+                <section className="p-4 space-y-4 w-full h-full overflow-y-scroll max-w-2xl mx-auto">
+                    <p>
+                        In general, every block of text separated with two line
+                        breaks is considered a separate todo. Besides that, you
+                        can use Markdown-like syntax, as described below.
+                    </p>
+
                     <h1 className="text-lg">Syntax</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                         <Term term="# [header title]" />
