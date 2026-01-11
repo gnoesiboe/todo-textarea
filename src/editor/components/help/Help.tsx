@@ -17,7 +17,7 @@ export const Help: FC = () => {
                 <button
                     type="button"
                     onClick={() => setExpanded(false)}
-                    className="absolute top-4 right-4 cursor-pointer border rounded p-2 border-transparent hover:border-slate-300"
+                    className="absolute top-4 right-4 cursor-pointer border rounded p-2 border-slate-200 hover:border-slate-500 bg-white"
                 >
                     <X size={13} />
                 </button>
