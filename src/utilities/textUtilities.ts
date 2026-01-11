@@ -11,6 +11,7 @@ export function splitTextInSentences(text: string): Sentence[] {
             // Is todo when two previous lines are empty
             isTodo =
                 !text.startsWith('#') &&
+                !text.startsWith('---') &&
                 text.trim().length > 0 &&
                 sentences[index - 1].text.trim().length === 0 &&
                 sentences[index - 2].text.trim().length === 0;
