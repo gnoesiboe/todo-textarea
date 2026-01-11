@@ -73,7 +73,7 @@ const inlineCodeDriver: TransformerDriver = (text) => {
     if (regex.test(text)) {
         return text.replace(
             regex,
-            `<code class="bg-slate-200 italic text-xs">$1</code>`,
+            `<code class="bg-slate-200 rounded text-inherit">$1</code>`,
         );
     }
 
