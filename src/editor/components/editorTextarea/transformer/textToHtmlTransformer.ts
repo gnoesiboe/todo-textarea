@@ -175,6 +175,27 @@ const quoteDriver: TransformerDriver = (text) => {
     return `<blockquote class="italic text-slate-500">${text}</blockquote>`;
 };
 
+const createImportantDriver = (
+    numberOfExclamations: number,
+    bgColorClassName: string,
+): TransformerDriver => {
+    return (text) => {
+        const exclamations = '!'.repeat(numberOfExclamations);
+
+        const match = `[${exclamations}]`;
+
+        const className = composeClassnames(
+            bgColorClassName,
+            'rounded text-transparent',
+        );
+
+        return text.replace(
+            match,
+            `<span class="${className}">[<span class="text-slate-800">${exclamations}</span>]</span>`,
+        );
+    };
+};
+
 const drivers: ReadonlyArray<TransformerDriver> = [
     primaryHeaderDriver,
     secondaryHeaderDriver,
@@ -186,6 +207,8 @@ const drivers: ReadonlyArray<TransformerDriver> = [
     horizontalRuleDriver,
     flagDriver,
     urlDriver,
+    createImportantDriver(2, 'bg-red-200'),
+    createImportantDriver(1, 'bg-orange-200'),
     inlineCodeDriver,
     emptyLineDriver,
     fallbackDriver, // Keep this last

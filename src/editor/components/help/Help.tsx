@@ -105,6 +105,18 @@ export const Help: FC = () => {
                                 </p>
                                 <Preview value="-------------------------" />
                             </Description>
+
+                            <Term term="[!]" />
+                            <Description>
+                                <p>Minorly important.</p>
+                                <Preview value="[!]" />
+                            </Description>
+
+                            <Term term="[!!]" />
+                            <Description>
+                                <p>Very important.</p>
+                                <Preview value="[!!]" />
+                            </Description>
                         </div>
                     </div>
                 </section>
