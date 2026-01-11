@@ -47,13 +47,13 @@ export const Help: FC = () => {
                     <div className="space-y-2">
                         <Heading>Markdown-like syntax</Heading>
                         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                            <Term term="# [header title]" />
+                            <Term term="# <header title>" />
                             <Description>
                                 <p>Header to distinguish groups of todos.</p>
                                 <Preview value="# Some header title" />
                             </Description>
 
-                            <Term term="## [Header title]" />
+                            <Term term="## <Header title>" />
                             <Description>
                                 <p>
                                     Secondary header to distinguish sub groups
@@ -62,19 +62,19 @@ export const Help: FC = () => {
                                 <Preview value="## Some todo title" />
                             </Description>
 
-                            <Term term="- [ ] [todo title]" />
+                            <Term term="- [ ] <todo title>" />
                             <Description>
                                 <p>Level two todo in open status</p>
                                 <Preview value="- [ ] Feed the dogs" />
                             </Description>
 
-                            <Term term="- [x] [todo title]" />
+                            <Term term="- [x] <todo title>" />
                             <Description>
                                 <p>Level two todo in done status.</p>
                                 <Preview value="- [x] Feed the birds" />
                             </Description>
 
-                            <Term term="`[inline code]`" />
+                            <Term term="`<inline code>`" />
                             <Description>
                                 <p>Inline code snippet.</p>
                                 <Preview value="Some text `some snippet` and some more." />
