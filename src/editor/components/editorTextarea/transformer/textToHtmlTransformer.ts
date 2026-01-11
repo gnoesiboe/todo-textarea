@@ -163,10 +163,19 @@ const primaryTodoDriver: TransformerDriver = (text, { isTodo }) => {
     return `<span class="font-bold">${text}</span>`;
 };
 
+const quoteDriver: TransformerDriver = (text) => {
+    if (!text.startsWith('> ')) {
+        return text;
+    }
+
+    return `<blockquote class="italic text-slate-500">${text}</blockquote>`;
+};
+
 const drivers: ReadonlyArray<TransformerDriver> = [
     primaryHeaderDriver,
     secondaryHeaderDriver,
     primaryTodoDriver,
+    quoteDriver,
     doneTodoDriver,
     openTodoDriver,
     listItemDriver, // Keep behind todo drivers
