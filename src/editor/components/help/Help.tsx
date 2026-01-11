@@ -91,10 +91,10 @@ export const Help: FC = () => {
                                 <Preview value="https://wwww.google.nl" />
                             </Description>
 
-                            <Term term="---" />
+                            <Term term="> <some quote>" />
                             <Description>
-                                <p>Show a horizontal rule.</p>
-                                <Preview value="---" />
+                                <p>Add a quote block.</p>
+                                <Preview value="> some quoted text" />
                             </Description>
                         </div>
                     </div>
