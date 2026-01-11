@@ -1,12 +1,12 @@
 import { type ReactElement, useEffect, useState, type FC } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { useTextWidth } from '@tag0/use-text-width';
-import { Sentence } from '../../model/Sentence';
 import Checkbox from './components/checkbox/Checkbox';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import Timer from './components/Timer/Timer';
 import type { SharedStyle } from '../../Editor';
 import { isDoneRegex } from '../editorTextarea/transformer/textToHtmlTransformer';
+import { splitTextInSentences } from '../../../utilities/textUtilities';
 
 type Props = {
     sharedStyle: SharedStyle;
@@ -46,14 +46,14 @@ const EditorSidebar: FC<Props> = ({ className, sharedStyle }) => {
         ? Math.round(textAreaWidth / monospaceFontWidth)
         : null;
 
-    const sentences = text.split('\n').map((text) => Sentence.fromText(text));
+    const sentences = splitTextInSentences(text);
 
     const elements = sentences.reduce<ReactElement[]>(
         (accumulator, sentence, sentenceIndex) => {
             const lines = sentence.getLines(numberOfCharsPerLine ?? Infinity);
 
-            lines.forEach((line, lineIndex) => {
-                if (line.startsWith('## ')) {
+            lines.forEach((_, lineIndex) => {
+                if (lineIndex === 0 && sentence.isTodo) {
                     const checked = isDoneRegex.test(sentence.text);
 
                     accumulator.push(

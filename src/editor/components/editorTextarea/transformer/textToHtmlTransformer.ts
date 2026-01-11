@@ -1,17 +1,20 @@
 import { composeClassnames } from '../../../../utilities/classNameUtilities';
+import { splitTextInSentences } from '../../../../utilities/textUtilities';
 
 type TransformerDriver = (
     text: string,
-    lineIndex: number,
-    currentLineIndex: number | null,
+    settings: {
+        lineIndex: number;
+        currentLineIndex: number | null;
+        isTodo: boolean;
+    },
 ) => string;
 
 export const isDoneRegex = /@done/;
 
 const primaryHeaderDriver: TransformerDriver = (
     text,
-    lineIndex,
-    currentLineIndex,
+    { lineIndex, currentLineIndex },
 ) => {
     const expectedPrefix = '# ';
 
@@ -33,22 +36,14 @@ const primaryHeaderDriver: TransformerDriver = (
     return `<h1 class="${className}">${expectedPrefix}${content}</h1>`;
 };
 
-const primaryTodoDriver: TransformerDriver = (text) => {
+const secondaryHeaderDriver: TransformerDriver = (text) => {
     const expectedPrefix = '## ';
 
     if (!text.startsWith(expectedPrefix)) {
         return text;
     }
 
-    const className = composeClassnames(
-        isDoneRegex.test(text)
-            ? 'text-slate-600 line-through'
-            : 'text-slate-800 font-bold',
-    );
-
-    const content = text.slice(2);
-
-    return `<h2><span class="text-slate-400">${expectedPrefix}</span><span class="${className}">${content}</span></h2>`;
+    return `<h2 class="underline underline-offset-3 decoration-1 font-bold">${text}</h2>`;
 };
 
 const emptyLineDriver: TransformerDriver = (text) => {
@@ -124,8 +119,7 @@ const listItemDriver: TransformerDriver = (text) => {
 
 const horizontalRuleDriver: TransformerDriver = (
     text,
-    lineIndex,
-    currentLineIndex,
+    { lineIndex, currentLineIndex },
 ) => {
     if (/^---+$/.test(text.trim())) {
         const isCurrentLine = lineIndex === currentLineIndex;
@@ -157,8 +151,21 @@ const flagDriver: TransformerDriver = (text) => {
         .replaceAll(flagRegex2, `<span class="${className}">$1</span>`);
 };
 
+const primaryTodoDriver: TransformerDriver = (text, { isTodo }) => {
+    if (!isTodo) {
+        return text;
+    }
+
+    if (text.trim().length === 0) {
+        return text;
+    }
+
+    return `<span class="font-bold">${text}</span>`;
+};
+
 const drivers: ReadonlyArray<TransformerDriver> = [
     primaryHeaderDriver,
+    secondaryHeaderDriver,
     primaryTodoDriver,
     doneTodoDriver,
     openTodoDriver,
@@ -175,19 +182,19 @@ export function transformToHtml(
     text: string,
     currentLineIndex: number | null,
 ): string {
-    const lines = text.split('\n');
+    const sentences = splitTextInSentences(text);
 
-    return lines
-        .map((line, index) => {
-            return drivers.reduce((currentLine, driver) => {
-                const transformedLine = driver(
-                    currentLine,
-                    index,
+    return sentences
+        .map((sentence, index) => {
+            return drivers.reduce((currentSentenceText, driver) => {
+                const transformedLine = driver(currentSentenceText, {
+                    lineIndex: index,
                     currentLineIndex,
-                );
+                    isTodo: sentence.isTodo,
+                });
 
                 return transformedLine;
-            }, line);
+            }, sentence.text);
         })
         .join('');
 }

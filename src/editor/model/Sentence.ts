@@ -1,12 +1,14 @@
 export class Sentence {
     public readonly text: string;
+    public isTodo: boolean;
 
-    private constructor(text: string) {
+    public constructor(text: string, isTodo: boolean) {
         this.text = text;
+        this.isTodo = isTodo;
     }
 
-    public toText(): string {
-        return this.text;
+    public clearTodoSatus(): void {
+        this.isTodo = false;
     }
 
     public getLines(numberOfCharsPerLine: number): string[] {
@@ -36,9 +38,5 @@ export class Sentence {
         });
 
         return out;
-    }
-
-    public static fromText(text: string): Sentence {
-        return new Sentence(text);
     }
 }

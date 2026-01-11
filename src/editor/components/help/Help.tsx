@@ -29,12 +29,11 @@ export const Help: FC = () => {
                             <Preview value="# Some header title" />
                         </Description>
 
-                        <Term term="## [todo title]" />
+                        <Term term="## [Header title]" />
                         <Description>
                             <p>
-                                {' '}
-                                Level one todo with timer and checkbox in the
-                                sidebar.
+                                Secondary header to distinguish sub groups of
+                                todos.
                             </p>
                             <Preview value="## Some todo title" />
                         </Description>
