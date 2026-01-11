@@ -50,7 +50,7 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
                 className={composeClassnames(sharedClassNames)}
                 style={sharedStyle}
                 dangerouslySetInnerHTML={{
-                    __html: transformToHtml(text, currentLineIndex),
+                    __html: transformToHtml(text, currentLineIndex, true),
                 }}
             />
             <textarea

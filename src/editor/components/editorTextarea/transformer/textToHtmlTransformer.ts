@@ -180,12 +180,17 @@ const drivers: ReadonlyArray<TransformerDriver> = [
 export function transformToHtml(
     text: string,
     currentLineIndex: number | null,
+    includePrimaryTodoDriver: boolean,
 ): string {
     const sentences = splitTextInSentences(text);
 
+    const driversToApply = includePrimaryTodoDriver
+        ? drivers
+        : drivers.filter((d) => d !== primaryTodoDriver);
+
     return sentences
         .map((sentence, index) => {
-            return drivers.reduce((currentSentenceText, driver) => {
+            return driversToApply.reduce((currentSentenceText, driver) => {
                 const transformedLine = driver(currentSentenceText, {
                     lineIndex: index,
                     currentLineIndex,

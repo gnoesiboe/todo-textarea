@@ -8,7 +8,7 @@ type Props = {
 export const Preview: FC<Props> = ({ value }) => (
     <div
         dangerouslySetInnerHTML={{
-            __html: transformToHtml(value, null),
+            __html: transformToHtml(value, null, false),
         }}
     />
 );
