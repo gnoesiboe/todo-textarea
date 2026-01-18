@@ -36,7 +36,7 @@ export function useMoveTodosUpAndDown(
 
         setTimeout(() => {
             textareaEl.setSelectionRange(newSelectionStart, newSelectionStart);
-        }, 100);
+        });
     };
 
     return onKeyUp;
