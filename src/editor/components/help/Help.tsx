@@ -132,6 +132,11 @@ export const Help: FC = () => {
                             <Description>
                                 <p>Move the current todo or heading down</p>
                             </Description>
+
+                            <Term term="CTRL + x" />
+                            <Description>
+                                <p>Toggle the current todo done status.</p>
+                            </Description>
                         </div>
                     </div>
                 </section>

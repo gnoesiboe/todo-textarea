@@ -3,7 +3,6 @@ import { moveSection } from '../handler/sectionMoveHandler';
 import useEditorContext from '../../../../context/hooks/useEditorContext';
 
 export function useMoveTodosUpAndDown(
-    resizeTextareaToContents: () => void,
     textareaEl: HTMLTextAreaElement | null,
 ): KeyboardEventHandler<HTMLTextAreaElement> {
     const { text, setText } = useEditorContext();
@@ -15,8 +14,6 @@ export function useMoveTodosUpAndDown(
 
             return;
         }
-
-        resizeTextareaToContents();
 
         if (
             !event.ctrlKey ||

@@ -5,6 +5,7 @@ import { composeClassnames } from '../../../utilities/classNameUtilities';
 import { useDetermineCurrentLineNumber } from './hooks/useDetermineCurrentLineNumber';
 import { useResizeTextareaToFitContents } from './hooks/useResizeTextareaToFitContents';
 import { useMoveTodosUpAndDown } from './hooks/useMoveTodosUpAndDown';
+import { useToggleTodoDoneStatusWithKeyboard } from './hooks/useToggleTodoDoneStatusWithKeyboard';
 
 type Props = {
     sharedStyle: CSSProperties;
@@ -22,8 +23,9 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
         sharedStyle,
     );
 
-    const onKeyUp = useMoveTodosUpAndDown(
-        resizeTextareaToContents,
+    const handleMoveTodosUpAndDown = useMoveTodosUpAndDown(textareaRef.current);
+
+    const handleToggleTodoDone = useToggleTodoDoneStatusWithKeyboard(
         textareaRef.current,
     );
 
@@ -48,7 +50,11 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
                 style={sharedStyle}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                onKeyUp={onKeyUp}
+                onKeyUp={(event) => {
+                    resizeTextareaToContents();
+                    handleMoveTodosUpAndDown(event);
+                    handleToggleTodoDone(event);
+                }}
                 ref={textareaRef}
                 placeholder="Start typing. See 'help' for available syntax."
             />
