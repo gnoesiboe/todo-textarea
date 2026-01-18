@@ -10,6 +10,7 @@ export type EditorContextValue = EditorContextState & {
     appendToLine(index: number, textToAppend: string): void;
     replaceLine(index: number, newLine: string): void;
     setCurrentLineIndex(index: number | null): void;
+    toggleLineDoneStatus(lineIndex: number): void;
 };
 
 export const EditorContext = createContext<EditorContextValue>({
@@ -19,4 +20,5 @@ export const EditorContext = createContext<EditorContextValue>({
     appendToLine: () => {},
     replaceLine: () => {},
     setCurrentLineIndex: () => {},
+    toggleLineDoneStatus: () => {},
 });

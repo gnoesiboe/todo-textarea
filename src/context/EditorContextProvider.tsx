@@ -6,6 +6,8 @@ import {
 } from './editorContext';
 import { usePersistStateToUrl } from './hooks/usePersistStateToUrl';
 import { decodeBase64 } from './utilities/base64utilities';
+import { isDoneRegex } from '../editor/components/editorTextarea/transformer/textToHtmlTransformer';
+import { formatAsDateTime } from '../utilities/dateTimeUtilities';
 
 function loadTextFromQueryParam(): string {
     const queryParams = new URLSearchParams(window.location.search);
@@ -85,6 +87,27 @@ export const EditorContextProvider: FC<{ children: ReactNode }> = ({
         }));
     };
 
+    const toggleLineDoneStatus: EditorContextValue['toggleLineDoneStatus'] = (
+        lineIndex: number,
+    ): void => {
+        const newText = state.text
+            .split('\n')
+            .map((line, index) => {
+                if (lineIndex !== index) {
+                    return line;
+                }
+
+                if (isDoneRegex.test(line)) {
+                    return line.replace(/@done\([^)]*\)/g, '');
+                }
+
+                return `${line.trim()} @done(${formatAsDateTime(new Date())})`;
+            })
+            .join('\n');
+
+        setText(newText);
+    };
+
     usePersistStateToUrl(state.text);
 
     return (
@@ -95,6 +118,7 @@ export const EditorContextProvider: FC<{ children: ReactNode }> = ({
                 appendToLine,
                 replaceLine,
                 setCurrentLineIndex,
+                toggleLineDoneStatus,
             }}
         >
             {children}
