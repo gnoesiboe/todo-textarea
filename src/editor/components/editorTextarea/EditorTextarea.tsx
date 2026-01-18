@@ -1,4 +1,9 @@
-import { useRef, type CSSProperties, type FC } from 'react';
+import {
+    useRef,
+    type CSSProperties,
+    type FC,
+    type KeyboardEventHandler,
+} from 'react';
 import { transformToHtml } from './transformer/textToHtmlTransformer';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import { composeClassnames } from '../../../utilities/classNameUtilities';
@@ -25,6 +30,36 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
     const sharedClassNames =
         'w-full border-0 p-0 bg-transparent mt-5 font-mono absolute top-0 left-0 text-sm line leading-6';
 
+    const onKeyUp: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
+        resizeTextareaToContents();
+
+        if (
+            !event.ctrlKey ||
+            !event.shiftKey ||
+            !['ArrowUp', 'ArrowDown'].includes(event.key)
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const { newText, newSelectionStart } = moveSection(
+            text,
+            textareaRef.current!,
+            event.key === 'ArrowUp' ? 'up' : 'down',
+        );
+
+        setText(newText);
+
+        setTimeout(() => {
+            textareaRef.current!.setSelectionRange(
+                newSelectionStart,
+                newSelectionStart,
+            );
+        }, 100);
+    };
+
     return (
         <div className="w-full bg-white h-screen relative">
             <div
@@ -43,35 +78,7 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
                 style={sharedStyle}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                onKeyUp={(event) => {
-                    resizeTextareaToContents();
-
-                    if (
-                        !event.ctrlKey ||
-                        !event.shiftKey ||
-                        !['ArrowUp', 'ArrowDown'].includes(event.key)
-                    ) {
-                        return;
-                    }
-
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    const { newText, newSelectionStart } = moveSection(
-                        text,
-                        textareaRef.current!,
-                        event.key === 'ArrowUp' ? 'up' : 'down',
-                    );
-
-                    setText(newText);
-
-                    setTimeout(() => {
-                        textareaRef.current!.setSelectionRange(
-                            newSelectionStart,
-                            newSelectionStart,
-                        );
-                    }, 100);
-                }}
+                onKeyUp={onKeyUp}
                 ref={textareaRef}
                 placeholder="Start typing. See 'help' for available syntax."
             />
