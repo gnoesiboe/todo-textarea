@@ -21,7 +21,7 @@ export const Help: FC = () => {
                 >
                     <X size={13} />
                 </button>
-                <section className="p-4 space-y-8 w-full h-full overflow-y-scroll max-w-2xl mx-auto">
+                <section className="p-4 space-y-12 w-full h-full overflow-y-scroll max-w-2xl mx-auto">
                     <div className="space-y-2">
                         <Heading>Introduction</Heading>
                         <ul className="pl-4 list-disc">
@@ -116,6 +116,21 @@ export const Help: FC = () => {
                             <Description>
                                 <p>Very important.</p>
                                 <Preview value="[!!]" />
+                            </Description>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <Heading>Keyboard shortcuts</Heading>
+                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                            <Term term="SHIFT + CTRL + UP" />
+                            <Description>
+                                <p>Move the current todo or heading up</p>
+                            </Description>
+
+                            <Term term="SHIFT + CTRL + DOWN" />
+                            <Description>
+                                <p>Move the current todo or heading down</p>
                             </Description>
                         </div>
                     </div>

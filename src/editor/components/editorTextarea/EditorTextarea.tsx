@@ -9,6 +9,7 @@ import { transformToHtml } from './transformer/textToHtmlTransformer';
 import useEditorContext from '../../../context/hooks/useEditorContext';
 import { composeClassnames } from '../../../utilities/classNameUtilities';
 import { useDetermineCurrentLineNumber } from './hooks/useDetermineCurrentLineNumber';
+import { moveSection } from './handler/sectionMoveHandler';
 
 type Props = {
     sharedStyle: CSSProperties;
@@ -62,7 +63,35 @@ const EditorTextarea: FC<Props> = ({ sharedStyle }) => {
                 style={sharedStyle}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                onKeyUp={() => resizeTextareaToContents()}
+                onKeyUp={(event) => {
+                    resizeTextareaToContents();
+
+                    if (
+                        !event.ctrlKey ||
+                        !event.shiftKey ||
+                        !['ArrowUp', 'ArrowDown'].includes(event.key)
+                    ) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    const { newText, newSelectionStart } = moveSection(
+                        text,
+                        textareaRef.current!,
+                        event.key === 'ArrowUp' ? 'up' : 'down',
+                    );
+
+                    setText(newText);
+
+                    setTimeout(() => {
+                        textareaRef.current!.setSelectionRange(
+                            newSelectionStart,
+                            newSelectionStart,
+                        );
+                    }, 100);
+                }}
                 ref={textareaRef}
                 placeholder="Start typing. See 'help' for available syntax."
             />

@@ -1,5 +1,28 @@
 import { Sentence } from '../editor/model/Sentence';
 
+export function splitSeparateSections(text: string): string[] {
+    const sections: string[] = [''];
+
+    const lines = text.split('\n');
+
+    let numberOfEmptyLines = 0;
+    lines.forEach((line, index) => {
+        const isEmptyLine = line.trim().length === 0;
+        const isLastLine = index === lines.length - 1;
+
+        sections[sections.length - 1] += line + (isLastLine ? '' : '\n');
+
+        numberOfEmptyLines += isEmptyLine ? 1 : 0;
+
+        if (numberOfEmptyLines >= 2) {
+            sections.push('');
+            numberOfEmptyLines = 0;
+        }
+    });
+
+    return sections;
+}
+
 export function splitTextInSentences(text: string): Sentence[] {
     const rawSentences = text.split('\n');
 
