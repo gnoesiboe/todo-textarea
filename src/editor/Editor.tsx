@@ -7,6 +7,7 @@ import { useTitle } from './hooks/useTitle';
 import { EditTitle } from './components/editTitle/EditTitle';
 import { Plus } from 'react-feather';
 import { MergeIn } from './components/mergeIn/MergeIn';
+import { useNotifyAutoSaved } from './hooks/useNotifyAutoSaved';
 
 export type SharedStyle = Required<
     Pick<CSSProperties, 'fontFamily' | 'lineHeight' | 'fontSize' | 'overflowY'>
@@ -21,6 +22,8 @@ const sharedStyle: SharedStyle = {
 
 const Editor: FC = () => {
     const { title } = useTitle();
+
+    useNotifyAutoSaved();
 
     return (
         <div className="max-w-4xl margin-x-auto relative">
