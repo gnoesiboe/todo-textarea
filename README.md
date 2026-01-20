@@ -7,4 +7,4 @@ For each primary level todo you can also start and stop timers.
 # Todo
 
 - [ ] Continue (todo) list items, when adding sub-todo
-- [ ] Ensure up and down keyboard shortcut works correctly with sub-todos
+- [ ] Add an estimation
