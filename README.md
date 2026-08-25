@@ -8,3 +8,6 @@ For each primary level todo you can also start and stop timers.
 
 - [ ] Continue (todo) list items, when adding sub-todo
 - [ ] Add an estimation
+- [ ] When marking a todo as done, and the timer is pending, stop the timer also
+- [ ] When a todo is marked as waiting, don't show checkbox
+- [ ] When a todo is checked off, and has exclamation marks, show muted as it no longer requires attention
